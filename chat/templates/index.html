@@ -1,31 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="mb-3 overflow-scroll" style="height: 700px">
-  {% for i in range %}
-  <div class="row mb-2">
-    <div class="col-6 offset-6">
-      <div class="p-3 bg-light">Some text here</div>
-    </div>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{user.id}}</td>
+          <td>
+            <a href="{% url 'chat' user.id %}">
+              {{user.username}}
+            </a>
+          </td>
+          <td>{{user.email}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
 
-
-  <div class="row mb-2">
-    <div class="col-6">
-      <div class="p-3 bg-light">Some text here 2</div>
-    </div>
-  </div>
-  {% endfor %}
-</div>
-
-<div class="container fixed-bottom mb-2">
-  <form action="">
-    <div class="d-flex gap-3">
-      <textarea class="form-control" rows="2"></textarea>
-      <button class="btn btn-primary">Submit</button>
-    </div>
-  </form>
-
-</div>
+  </table>
 
 {% endblock %}

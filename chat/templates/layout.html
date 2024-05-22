@@ -12,6 +12,16 @@
 <body>
   <div class="container mt-3">
 
+    <div class="mb-2 bg-light p-2">
+      <h5>Quote of the day</h5>
+      <div>
+        <em>{{ daily_quote.quote }}</em>
+      </div>
+      <small class="text-muted">
+        - {{ daily_quote.author }}
+      </small>
+    </div>
+
     {% block content %}
     empty
     {% endblock %}

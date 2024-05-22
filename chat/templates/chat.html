@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="mb-3 overflow-y-scroll overflow-x-hidden" style="height: 500px" id="message-container">
+    {% for message in messages %}
+      <div class="row mb-2">
+        {% if message.user.id is request.user.id %}
+          <div class="col-6 offset-6">
+        {% else %}
+          <div class="col-6">
+        {% endif %}
+
+        <div class="p-2 bg-light">
+
+          <small class="text-muted">{{ message.user }} at {{ message.created_at|date:"d.m.Y H:i:s" }}</small>
+          <div class="mb-1">
+            {{message.content}}
+          </div>
+        </div>
+      </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="container fixed-bottom mb-2">
+    <form method="post">
+
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      {% endbuttons %}
+    </form>
+
+  </div>
+
+  <script>
+    document.getElementById('message-container').scrollTo({
+      top: document.body.scrollHeight,
+    });
+  </script>
+
+{% endblock %}
