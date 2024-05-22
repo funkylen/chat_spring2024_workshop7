@@ -1,4 +1,7 @@
+from cent import Client, PublishRequest
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.forms import model_to_dict
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -22,18 +25,34 @@ def chat(request, user_id):
         chat.users.add(user)
         chat.users.add(request.user)
 
+    ws_channel_name = f"chat_{chat.id}"
+
     form = MessageForm
     if request.method == "POST":
         message = Message(chat=chat, user=user)
         form = MessageForm(request.POST, instance=message)
         if form.is_valid():
             form.save()
+
+            api_url = settings.CENTRIFUGO_API_URL
+            api_key = settings.CENTRIFUGO_API_KEY
+
+            client = Client(api_url, api_key)
+            request = PublishRequest(
+                channel=ws_channel_name, data=model_to_dict(message)
+            )
+            client.publish(request)
+
             return redirect(reverse("chat", kwargs={"user_id": user.id}))
 
     return render(
         request,
         "chat.html",
-        {"messages": chat.message_set.all(), "form": form},
+        {
+            "messages": chat.message_set.all(),
+            "form": form,
+            "ws_channel_name": ws_channel_name,
+        },
     )
 
 

@@ -120,6 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -128,3 +131,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 QUOTE_URL = "https://api.api-ninjas.com/v1/quotes"
 QUOTE_API_KEY = "TkTyJHg07HQiEwMnwmU1Jw==S3pV8P58wwWQbT3d"
+
+CENTRIFUGO_SECRET = "my_secret"
+CENTRIFUGO_WS_URL = "ws://127.0.0.1:8010/connection/websocket"
+CENTRIFUGO_API_URL = "http://127.0.0.1:8010/api"
+CENTRIFUGO_API_KEY = "my_api_key"
