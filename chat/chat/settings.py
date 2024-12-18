@@ -136,3 +136,10 @@ CENTRIFUGO_SECRET = "my_secret"
 CENTRIFUGO_WS_URL = "ws://127.0.0.1:8010/connection/websocket"
 CENTRIFUGO_API_URL = "http://127.0.0.1:8010/api"
 CENTRIFUGO_API_KEY = "my_api_key"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/tmp/chat_app_cache",
+    }
+}

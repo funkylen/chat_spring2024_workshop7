@@ -1,6 +1,7 @@
 import requests
 import jwt
 import time
+from django.core.cache import cache
 from django.conf import settings
 
 
@@ -17,14 +18,6 @@ def get_centrifugo_data(user_id):
 
 
 def global_settings(request):
-    # json_data = []
-    # response = requests.get(
-    #    settings.QUOTE_URL,
-    #    headers={"X-Api-Key": settings.QUOTE_API_KEY},
-    # )
-    # if response.status_code == 200:
-    #    json_data = response.json()
+    daily_quote = cache.get("daily_quote")
 
-    #    print(json_data[0])
-    daily_quote = None
     return {"daily_quote": daily_quote, **get_centrifugo_data(request.user.id)}
